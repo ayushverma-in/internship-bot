@@ -40,4 +40,10 @@ jobs:
           git config user.email "actions@github.com"
           git add seen_listings.json
           git diff --staged --quiet || git commit -m "Update seen listings [skip ci]"
+          git config user.name "internship-bot"
+          git config user.email "actions@github.com"
+          git add seen_listings.json
+          git diff --staged --quiet || git commit -m "Update seen listings [skip ci]"
+          git pull --rebase origin main
           git push
+       
