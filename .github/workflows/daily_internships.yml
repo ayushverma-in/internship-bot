@@ -1,28 +1,22 @@
 name: Daily Internship Report
-
 on:
   schedule:
     - cron: "30 5 * * *"
   workflow_dispatch: {}
-
 permissions:
   contents: write
-
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install dependencies
         run: pip install -r requirements.txt
-
       - name: Run the bot
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
@@ -33,17 +27,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
-
       - name: Commit updated state file
         run: |
           git config user.name "internship-bot"
           git config user.email "actions@github.com"
           git add seen_listings.json
           git diff --staged --quiet || git commit -m "Update seen listings [skip ci]"
-          git config user.name "internship-bot"
-          git config user.email "actions@github.com"
-          git add seen_listings.json
-          git diff --staged --quiet || git commit -m "Update seen listings [skip ci]"
           git pull --rebase origin main
           git push
-       
