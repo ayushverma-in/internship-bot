@@ -1,7 +1,7 @@
 name: Daily Internship Report
 on:
   schedule:
-    - cron: "30 5 * * *"
+  - cron: "0 */4 * * *"
   workflow_dispatch: {}
 permissions:
   contents: write
