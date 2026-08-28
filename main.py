@@ -8,9 +8,7 @@ from filters import passes_hard_filters
 from scorer import score_listing
 from state import load_state, save_state, listing_id, already_seen, mark_seen
 from notifier import send_report
-
 from sources import adzuna, jsearch, email_alerts
-
 
 def collect_all_listings():
     all_listings = []
@@ -23,7 +21,6 @@ def collect_all_listings():
             print(f"[main] {source.__name__} crashed: {e}")
     return all_listings
 
-
 def main():
     state = load_state()
     raw_listings = collect_all_listings()
@@ -31,9 +28,15 @@ def main():
     ranked = []
     skipped_seen = 0
     skipped_filter = 0
+    seen_this_run = set()
 
     for listing in raw_listings:
         lid = listing_id(listing)
+
+        if lid in seen_this_run:
+            continue
+        seen_this_run.add(lid)
+
         if already_seen(state, lid):
             skipped_seen += 1
             continue
@@ -63,7 +66,6 @@ def main():
     for item in top:
         mark_seen(state, item["lid"])
     save_state(state)
-
 
 if __name__ == "__main__":
     main()
