@@ -19,6 +19,7 @@ def fetch():
         "X-RapidAPI-Host": HOST,
     }
     for query in SEARCH_QUERIES:
+        job_list = []
         try:
             r = requests.get(
                 "https://jsearch.p.rapidapi.com/search-v2",
@@ -33,12 +34,13 @@ def fetch():
             )
             r.raise_for_status()
             data = r.json()
+            job_list = data.get("jobs", [])
         except Exception as e:
             print(f"[jsearch] query '{query}' failed: {e}")
             continue
 
-            job_list = data.get("jobs", [])
         print(f"[jsearch] query '{query}' returned {len(job_list)} jobs")
+
         if not isinstance(job_list, list):
             print(f"[jsearch] query '{query}' returned unexpected data: {job_list}")
             continue
