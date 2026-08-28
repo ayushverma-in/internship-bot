@@ -37,7 +37,8 @@ def fetch():
             print(f"[jsearch] query '{query}' failed: {e}")
             continue
 
-        job_list = data.get("jobs", [])
+            job_list = data.get("jobs", [])
+        print(f"[jsearch] query '{query}' returned {len(job_list)} jobs")
         if not isinstance(job_list, list):
             print(f"[jsearch] query '{query}' returned unexpected data: {job_list}")
             continue
