@@ -39,6 +39,8 @@ def fetch():
             print(f"[jsearch] query '{query}' failed: {e}")
             continue
 
+         if not job_list:
+            print(f"[jsearch] raw response: {data}")
         print(f"[jsearch] query '{query}' returned {len(job_list)} jobs")
 
         if not isinstance(job_list, list):
