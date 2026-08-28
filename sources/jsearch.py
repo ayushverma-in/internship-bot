@@ -23,7 +23,7 @@ def fetch():
     for query in SEARCH_QUERIES:
         try:
             r = requests.get(
-                "https://jsearch.p.rapidapi.com/search",
+                "https://jsearch.p.rapidapi.com/search-v2",
                 headers=headers,
                 params={
                     "query": f"{query} in India",
