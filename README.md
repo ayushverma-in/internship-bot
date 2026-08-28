@@ -25,6 +25,16 @@ weighted by your stated domain priorities.
 
 ---
 
+## Tech stack
+- **Python** — core scraping, filtering, scoring, and orchestration logic
+- **JSearch API** (RapidAPI) — job listings aggregator (Google for Jobs → LinkedIn, Indeed, Glassdoor, Naukri)
+- **GitHub Actions** — scheduled cron automation, runs serverless every 4 hours
+- **Telegram Bot API** — delivers the daily report
+- **Adzuna API** — secondary job source (optional, not currently active)
+- **Gmail API / IMAP** — email-alert parsing (optional, not currently active)
+
+Built to practice real-world API integration, data filtering/scoring logic, and CI/CD-style automation outside a classroom setting.
+
 ## One-time setup
 
 ### 1. Get a free JSearch API key
