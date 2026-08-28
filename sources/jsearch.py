@@ -20,7 +20,6 @@ def fetch():
     }
     for query in SEARCH_QUERIES:
         job_list = []
-        data = {}
         try:
             r = requests.get(
                 "https://jsearch.p.rapidapi.com/search-v2",
@@ -35,13 +34,10 @@ def fetch():
             )
             r.raise_for_status()
             data = r.json()
-            job_list = data.get("jobs", [])
+            job_list = data.get("data", {}).get("jobs", [])
         except Exception as e:
             print(f"[jsearch] query '{query}' failed: {e}")
             continue
-
-        if not job_list:
-            print(f"[jsearch] raw response for '{query}': {data}")
 
         print(f"[jsearch] query '{query}' returned {len(job_list)} jobs")
 
