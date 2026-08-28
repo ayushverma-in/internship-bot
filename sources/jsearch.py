@@ -9,12 +9,10 @@ from config import SEARCH_QUERIES
 RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY")
 HOST = "jsearch.p.rapidapi.com"
 
-
 def fetch():
     if not RAPIDAPI_KEY:
         print("[jsearch] missing RAPIDAPI_KEY, skipping")
         return []
-
     listings = []
     headers = {
         "X-RapidAPI-Key": RAPIDAPI_KEY,
@@ -27,9 +25,9 @@ def fetch():
                 headers=headers,
                 params={
                     "query": f"{query} in India",
-                    "page": "1",
                     "num_pages": "1",
-                    "remote_jobs_only": "true",
+                    "country": "in",
+                    "date_posted": "week",
                 },
                 timeout=20,
             )
@@ -39,7 +37,12 @@ def fetch():
             print(f"[jsearch] query '{query}' failed: {e}")
             continue
 
-        for job in data.get("data", []):
+        job_list = data.get("data", [])
+        if not isinstance(job_list, list):
+            print(f"[jsearch] query '{query}' returned unexpected data: {job_list}")
+            continue
+
+        for job in job_list:
             listings.append({
                 "source": "jsearch",
                 "title": job.get("job_title", ""),
