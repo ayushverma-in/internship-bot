@@ -20,6 +20,7 @@ def fetch():
     }
     for query in SEARCH_QUERIES:
         job_list = []
+        data = {}
         try:
             r = requests.get(
                 "https://jsearch.p.rapidapi.com/search-v2",
@@ -39,13 +40,10 @@ def fetch():
             print(f"[jsearch] query '{query}' failed: {e}")
             continue
 
-         if not job_list:
-            print(f"[jsearch] raw response: {data}")
-        print(f"[jsearch] query '{query}' returned {len(job_list)} jobs")
+        if not job_list:
+            print(f"[jsearch] raw response for '{query}': {data}")
 
-        if not isinstance(job_list, list):
-            print(f"[jsearch] query '{query}' returned unexpected data: {job_list}")
-            continue
+        print(f"[jsearch] query '{query}' returned {len(job_list)} jobs")
 
         for job in job_list:
             listings.append({
